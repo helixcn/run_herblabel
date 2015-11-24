@@ -7,7 +7,7 @@ If you have herblabel (https://github.com/helixcn/herblabel) installed in R, ple
 3. check the annotation labels from "annotation_labels_to_print.rtf"
 
 Note: 
-（1） Please close "Annotation_label_data.xlsx" or "annotation_labels_to_print.rtf" before printing. 
+(1) Please close "Annotation_label_data.xlsx" or "annotation_labels_to_print.rtf" before printing. 
 (2) Please change the property of the cells containing dates as "text", so excel will not change the text to numbers.
 
 Contact Jinlong Zhang (jinlongzhang01@gmail.com ) if you need any help. 
