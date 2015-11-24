@@ -1,0 +1,13 @@
+If you have herblabel (https://github.com/helixcn/herblabel) installed in R, please follow the steps to create annotation labels: 
+
+1. Fill the Annotation_label_data.xlsx. Put Scientific Name or Chinese Name at the column "LOCAL_NAME"
+
+2. Double click "print_annotation_labels_normal.bat" or "print_annotation_labels_without_family.bat" if you do not want the Family to be printed. 
+
+3. check the annotation labels from "annotation_labels_to_print.rtf"
+
+Note: 
+（1） Please close "Annotation_label_data.xlsx" or "annotation_labels_to_print.rtf" before printing. 
+(2) Please change the property of the cells containing dates as "text", so excel will not change the text to numbers.
+
+Contact Jinlong Zhang (jinlongzhang01@gmail.com ) if you need any help. 

@@ -1,0 +1,18 @@
+If you have herblabel (https://github.com/helixcn/herblabel) installed in R, please follow the steps to create annotation labels: 
+
+1. Export Specimen Information from BG-BASE specimen table using slist by copying the commands in the file "step 0 export specimen records from BG_BASE using SLIST.txt" from BG-BASE. A CSV file named "BG_BASE_EXPORT.CSV" will be generated in the current directory. 
+
+2. Double Click "step 1 convert_BG-BASE.bat" to convert this CSV to darwin format template. After converting to DARWIN Core Format, the csv file （BG_BASE_EXPORT.CSV） will be renamed to (CONVERTED_BG_BASE_EXPORT.CSV). 
+
+3. Check and Fill the herbarium_specimens_label_data.xlsx template. Put Scientific Name or Chinese Name at the column "LOCAL_NAME". 
+
+4. Double click "step 2 fill template and print_labels.bat", and view the herbarium labels from "herbarium_labels_to_print.rtf". 
+
+Note: 
+(1)Please close "herbarium_labels_to_print.rtf" or "herbarium_specimens_label_data.xlsx" before printing. 
+
+(2)Please fill the herbarium_specimens_label_data.xlsx template directly if your collection record is not from BG-BASE, and then click "step 2 fill template and print_labels.bat". 
+
+(3) Please change the property of the cells containing dates as "text", so excel will not change the text to numbers.
+
+Contact Jinlong Zhang (jinlongzhang01@gmail.com ) if you need any help. 
