@@ -8,7 +8,8 @@ and unzip the `master.zip` to your computer.
 You need to have R installed and also the following packages installed. 
 
 ```R
-install.packages("open.xlsx")
+install.packages("openxlsx")
+install.packages("devtools")
 library(devtools)
 install_github("helixcn/herblabel")
 ```
