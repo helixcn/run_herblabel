@@ -19,7 +19,7 @@ if(!file.exists("herbarium_specimens_label_data.xlsx")){
 dat_test <- read.xlsx("herbarium_specimens_label_data.xlsx")
 library(herblabel)
 dwc_filled <- fill_sp_dwc(dat_test)
-unlink("herbarium_specimens_label_data.xlsx")
+### unlink("herbarium_specimens_label_data.xlsx")
 
 #### Fill the dataset, edit the herbarium_specimens_label_data file
 write.xlsx(x = dwc_filled, file = "herbarium_specimens_label_data.xlsx")
@@ -30,20 +30,19 @@ herbarium_label(dat = dwc_filled2, outfile = paste("herbarium_labels_to_print.rt
 
 ### Save a copy to the history folder
 ### The time marker
-### dat_tag <- gsub(":", "", gsub(" ", "-", paste(Sys.time())))
-### 
-### if(!dir.exists("xlsx history")){
-###     dir.create("xlsx history")
-### } 
-### 
-### file.copy(from = "herbarium_specimens_label_data.xlsx", to = paste("xlsx history/", dat_tag, "_herbarium_specimens_label_data.xlsx", sep = ""))
-### 
-### 
-### if(!dir.exists("RTF history")){
-###     dir.create("RTF history")
-### } 
-### 
-### file.copy(from = "herbarium_labels_to_print.rtf", to = paste("RTF history/", dat_tag, "_herbarium_labels_to_print.rtf", sep = ""))
+dat_tag <- gsub(":", "", gsub(" ", "-", paste(Sys.time())))
+
+if(!dir.exists("xlsx history")){
+    dir.create("xlsx history")
+} 
+
+file.copy(from = "herbarium_specimens_label_data.xlsx", to = paste("xlsx history/", dat_tag, "_herbarium_specimens_label_data.xlsx", sep = ""))
+
+if(!dir.exists("RTF history")){
+    dir.create("RTF history")
+} 
+
+file.copy(from = "herbarium_labels_to_print.rtf", to = paste("RTF history/", dat_tag, "_herbarium_labels_to_print.rtf", sep = ""))
 
 #### Update the data base
 if(!dir.exists("DARWIN_CORE_DB_SAVE")){
