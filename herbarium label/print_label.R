@@ -18,7 +18,7 @@ if(!file.exists("herbarium_specimens_label_data.xlsx")){
 }
 dat_test <- read.xlsx("herbarium_specimens_label_data.xlsx")
 library(herblabel)
-dwc_filled <- fill_sp_dwc(dat_test)
+dwc_filled <- fill_dwc(dat_test)
 ### unlink("herbarium_specimens_label_data.xlsx")
 
 #### Fill the dataset, edit the herbarium_specimens_label_data file
