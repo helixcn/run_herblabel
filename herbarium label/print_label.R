@@ -78,4 +78,6 @@ if(file.exists("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx")){
     temp_dat_dc_db <- rbind(dat_dc_db_deleted, dwc_filled2) ## Add the entries not found in the existing database.
 }
 
-write.xlsx(temp_dat_dc_db, "DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx")
+write.xlsx(temp_dat_dc_db, paste("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", sep = ""))
+file.copy(from = "DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", to = paste("DARWIN_CORE_DB_SAVE/", dat_tag, "_darwin_core_database_saved.xlsx", sep = ""))
+
