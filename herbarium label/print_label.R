@@ -16,17 +16,6 @@ Sys.setlocale(category = "LC_ALL", locale = "Chinese")
 if(!file.exists("herbarium_specimens_label_data.xlsx")){
    stop("The template file \"herbarium_specimens_label_data.xlsx\" can not be found in this directory")   
 }
-dat_test <- read.xlsx("herbarium_specimens_label_data.xlsx")
-library(herblabel)
-dwc_filled <- fill_dwc(dat_test)
-### unlink("herbarium_specimens_label_data.xlsx")
-
-#### Fill the dataset, edit the herbarium_specimens_label_data file
-write.xlsx(x = dwc_filled, file = "herbarium_specimens_label_data.xlsx")
-
-dwc_filled2 <- read.xlsx("herbarium_specimens_label_data.xlsx")
-#### Create the labels for checking or printing
-herbarium_label(dat = dwc_filled2, outfile = paste("herbarium_labels_to_print.rtf"))
 
 ### Save a copy to the history folder
 ### The time marker
@@ -43,6 +32,18 @@ if(!dir.exists("RTF history")){
 } 
 
 file.copy(from = "herbarium_labels_to_print.rtf", to = paste("RTF history/", dat_tag, "_herbarium_labels_to_print.rtf", sep = ""))
+
+dat_test <- read.xlsx("herbarium_specimens_label_data.xlsx")
+library(herblabel)
+dwc_filled <- fill_dwc(dat_test)
+### unlink("herbarium_specimens_label_data.xlsx")
+
+#### Fill the dataset, edit the herbarium_specimens_label_data file
+write.xlsx(x = dwc_filled, file = "herbarium_specimens_label_data.xlsx")
+
+dwc_filled2 <- read.xlsx("herbarium_specimens_label_data.xlsx")
+#### Create the labels for checking or printing
+herbarium_label(dat = dwc_filled2, outfile = paste("herbarium_labels_to_print.rtf"))
 
 #### Update the data base
 if(!dir.exists("DARWIN_CORE_DB_SAVE")){
@@ -80,4 +81,3 @@ if(file.exists("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx")){
 
 write.xlsx(temp_dat_dc_db, paste("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", sep = ""))
 file.copy(from = "DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", to = paste("DARWIN_CORE_DB_SAVE/", dat_tag, "_darwin_core_database_saved.xlsx", sep = ""))
-
