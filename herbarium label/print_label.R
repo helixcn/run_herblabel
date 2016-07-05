@@ -10,8 +10,8 @@ getScriptPath <- function(){
 res <- getScriptPath()
 setwd(res)
 
-library(openxlsx)
-Sys.setlocale(category = "LC_ALL", locale = "Chinese")
+invisible(library(openxlsx))
+invisible(Sys.setlocale("LC_TIME", "C"))
 
 if(!file.exists("herbarium_specimens_label_data.xlsx")){
    stop("The template file \"herbarium_specimens_label_data.xlsx\" can not be found in this directory")   
@@ -25,13 +25,13 @@ if(!dir.exists("xlsx history")){
     dir.create("xlsx history")
 } 
 
-file.copy(from = "herbarium_specimens_label_data.xlsx", to = paste("xlsx history/", dat_tag, "_herbarium_specimens_label_data.xlsx", sep = ""))
+invisible(file.copy(from = "herbarium_specimens_label_data.xlsx", to = paste("xlsx history/", dat_tag, "_herbarium_specimens_label_data.xlsx", sep = "")))
 
 if(!dir.exists("RTF history")){
     dir.create("RTF history")
 } 
 
-file.copy(from = "herbarium_labels_to_print.rtf", to = paste("RTF history/", dat_tag, "_herbarium_labels_to_print.rtf", sep = ""))
+invisible(file.copy(from = "herbarium_labels_to_print.rtf", to = paste("RTF history/", dat_tag, "_herbarium_labels_to_print.rtf", sep = "")))
 
 dat_test <- read.xlsx("herbarium_specimens_label_data.xlsx")
 library(herblabel)
@@ -80,4 +80,4 @@ if(file.exists("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx")){
 }
 
 write.xlsx(temp_dat_dc_db, paste("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", sep = ""))
-file.copy(from = "DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", to = paste("DARWIN_CORE_DB_SAVE/", dat_tag, "_darwin_core_database_saved.xlsx", sep = ""))
+invisible(file.copy(from = "DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", to = paste("DARWIN_CORE_DB_SAVE/", dat_tag, "_darwin_core_database_saved.xlsx", sep = "")))
