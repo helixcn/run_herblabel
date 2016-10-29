@@ -13,6 +13,7 @@ res <- getScriptPath()
 setwd(res)
 
 #### setwd("/home/jinlong/Documents/github packages/run_herblabel/herbarium label")
+#### setwd("C:/github packages/run_herblabel/herbarium label")
 invisible(library(openxlsx))
 invisible(Sys.setlocale("LC_TIME", "C"))
 library(herblabel)
@@ -39,7 +40,7 @@ if(!dir.exists("RTF history")){
 invisible(file.copy(from = "herbarium_labels_to_print.rtf", to = paste("RTF history/", dat_tag, "_herbarium_labels_to_print.rtf", sep = "")))
 
 library(openxlsx)
-setwd("/home/jinlong/Documents/github packages/run_herblabel/herbarium label")
+#setwd("/home/jinlong/Documents/github packages/run_herblabel/herbarium label")
 dat_test <- read.xlsx("herbarium_specimens_label_data.xlsx")
 dat_test <- fill_dwc(dat_test)
 
@@ -63,8 +64,6 @@ addWorksheet(wb, "Sheet 1")
 writeData(wb, sheet = 1, dat_test, rowNames = FALSE)
 
 
-#### 第一次检查， 检查信息是否完整
-
 ## style for body
 bodyStyle <- createStyle(fontColour = "#FF0000", fgFill = "#FFFF00", border = "TopBottomLeftRight")
 
@@ -74,7 +73,7 @@ if(any(is.na(herbdat000$HERBARIUM))){
     ddd$HERBARIUM[which(is.na(herbdat000$HERBARIUM))] <- "WARNING:HERBARIUM not provided"
     position <- which(ddd == "WARNING:HERBARIUM not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:HERBARIUM not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "HERBARIUM not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -83,7 +82,7 @@ if(any(is.na(herbdat000$COLLECTOR))){
     ddd$COLLECTOR[which(is.na(herbdat000$COLLECTOR))] <- "WARNING:COLLECTOR not provided"
     position <- which(ddd == "WARNING:COLLECTOR not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:COLLECTOR not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "COLLECTOR not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -92,7 +91,7 @@ if(any(is.na(herbdat000$COLLECTOR_NUMBER))){
     ddd$COLLECTOR_NUMBER[which(is.na(herbdat000$COLLECTOR_NUMBER))] <- "WARNING:COLLECTOR_NUMBER not provided"
     position <- which(ddd == "WARNING:COLLECTOR_NUMBER not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:COLLECTOR_NUMBER not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "COLLECTOR_NUMBER not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -101,7 +100,7 @@ if(any(is.na(herbdat000$DATE_COLLECTED))){
     ddd$DATE_COLLECTED[which(is.na(herbdat000$DATE_COLLECTED))] <- "WARNING:DATE_COLLECTED not provided"
     position <- which(ddd == "WARNING:DATE_COLLECTED not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:DATE_COLLECTED not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "DATE_COLLECTED not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -110,7 +109,7 @@ if(any(is.na(herbdat000$FAMILY) )){
     ddd$FAMILY[which(is.na(herbdat000$FAMILY))] <- "WARNING:FAMILY not provided"
     position <- which(ddd == "WARNING:FAMILY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:FAMILY not provided"))
+    writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "FAMILY not provided"))
     addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -119,7 +118,7 @@ if(any(is.na(herbdat000$GENUS))){
     ddd$GENUS[which(is.na(herbdat000$GENUS))] <- "WARNING:GENUS not provided"
     position <- which(ddd == "WARNING:GENUS not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:GENUS not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "GENUS not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -127,7 +126,7 @@ if(any(is.na(herbdat000$COUNTRY))){
     ddd$COUNTRY[which(is.na(herbdat000$COUNTRY))] <- "WARNING:COUNTRY not provided"
     position <- which(ddd == "WARNING:COUNTRY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:COUNTRY not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "COUNTRY not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -135,7 +134,7 @@ if(any(is.na(herbdat000$STATE_PROVINCE))){
     ddd$STATE_PROVINCE[which(is.na(herbdat000$STATE_PROVINCE))] <- "WARNING:STATE_PROVINCE not provided"
     position <- which(ddd == "WARNING:STATE_PROVINCE not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:STATE_PROVINCE not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "STATE_PROVINCE not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -143,7 +142,7 @@ if(any(is.na(herbdat000$COUNTY))){
     ddd$COUNTY[which(is.na(herbdat000$COUNTY))] <- "WARNING:COUNTY not provided"
     position <- which(ddd == "WARNING:COUNTY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-       writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:COUNTY not provided"))
+       writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "COUNTY not provided"))
        addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -151,7 +150,7 @@ if(any(is.na(herbdat000$LOCALITY))){
     ddd$LOCALITY[which(is.na(herbdat000$LOCALITY))] <- "WARNING:LOCALITY not provided"
     position <- which(ddd == "WARNING:LOCALITY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:LOCALITY not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "LOCALITY not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -159,7 +158,7 @@ if(any(is.na(herbdat000$IDENTIFIED_BY))){
     ddd$IDENTIFIED_BY[which(is.na(herbdat000$IDENTIFIED_BY))] <- "WARNING:IDENTIFIED_BY not provided"
     position <- which(ddd == "WARNING:IDENTIFIED_BY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-       writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:IDENTIFIED_BY not provided"))
+       writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "IDENTIFIED_BY not provided"))
        addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -167,7 +166,7 @@ if(any(is.na(herbdat000$DATE_IDENTIFIED))){
     ddd$DATE_IDENTIFIED[which(is.na(herbdat000$DATE_IDENTIFIED))] <- "WARNING:DATE_IDENTIFIED not provided"
     position <- which(ddd == "WARNING:DATE_IDENTIFIED not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:DATE_IDENTIFIED not provided"))
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "DATE_IDENTIFIED not provided"))
         addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -181,19 +180,10 @@ options("openxlsx.dateFormat" = "yyyy-mm-dd")
 saveWorkbook(wb, "herbarium_specimens_label_data.xlsx", overwrite = TRUE)
 
 #######################################################
-########## 以上函数是对模板是否完整进行判断， 如果不完整， 则给出相应的提示 ##################
 #### which(!is.na(dat_test_res) , arr.ind = TRUE )
-
-##### 
-##### library(reshape2)
-##### aaa <- letters[1:24]
-##### dim(aaa) <- c(4,6)
-##### aaa
-##### which(aaa %in% "a" , arr.ind = TRUE )
 
 #### Fill the dataset, edit the herbarium_specimens_label_data file
 #### write.xlsx(x = dwc_filled, file = "herbarium_specimens_label_data.xlsx")
-#### 如果未能成功生成新的XLSX文件， 则在fill之前的XLSX文件添加comments
 
 dwc_filled2 <- read.xlsx("herbarium_specimens_label_data.xlsx")
 ###### dat = dwc_filled2
@@ -234,19 +224,18 @@ if(length(row_family) > 0 ){
 
 if(any(is.na(herbdat_comments$HERBARIUM))){
     herbdat_comments$HERBARIUM[which(is.na(herbdat_comments$HERBARIUM))] <- "WARNING:HERBARIUM not provided"
-    
-    
     position <- which(herbdat_comments == "WARNING:HERBARIUM not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:HERBARIUM not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "HERBARIUM not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
+
 if(any(is.na(herbdat_comments$COLLECTOR))){
     herbdat_comments$COLLECTOR[which(is.na(herbdat_comments$COLLECTOR))] <- "WARNING:COLLECTOR not provided"
     position <- which(herbdat_comments == "WARNING:COLLECTOR not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:COLLECTOR not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "COLLECTOR not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -255,7 +244,7 @@ if(any(is.na(herbdat_comments$COLLECTOR_NUMBER))){
     herbdat_comments$COLLECTOR_NUMBER[which(is.na(herbdat_comments$COLLECTOR_NUMBER))] <- "WARNING:COLLECTOR_NUMBER not provided"
     position <- which(herbdat_comments == "WARNING:COLLECTOR_NUMBER not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:COLLECTOR_NUMBER not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "COLLECTOR_NUMBER not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -264,7 +253,7 @@ if(any(is.na(herbdat_comments$DATE_COLLECTED))){
     herbdat_comments$DATE_COLLECTED[which(is.na(herbdat_comments$DATE_COLLECTED))] <- "WARNING:DATE_COLLECTED not provided"
     position <- which(herbdat_comments == "WARNING:DATE_COLLECTED not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:DATE_COLLECTED not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "DATE_COLLECTED not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -273,7 +262,7 @@ if(any(is.na(herbdat_comments$COUNTRY))){
     herbdat_comments$COUNTRY[which(is.na(herbdat_comments$COUNTRY))] <- "WARNING:COUNTRY not provided"
     position <- which(herbdat_comments == "WARNING:COUNTRY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:COUNTRY not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "COUNTRY not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -282,7 +271,7 @@ if(any(is.na(herbdat_comments$STATE_PROVINCE))){
     herbdat_comments$STATE_PROVINCE[which(is.na(herbdat_comments$STATE_PROVINCE))] <- "WARNING:STATE_PROVINCE not provided"
     position <- which(herbdat_comments == "WARNING:STATE_PROVINCE not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:STATE_PROVINCE not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "STATE_PROVINCE not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -291,7 +280,7 @@ if(any(is.na(herbdat_comments$COUNTY))){
     herbdat_comments$COUNTY[which(is.na(herbdat_comments$COUNTY))] <- "WARNING:COUNTY not provided"
     position <- which(herbdat_comments == "WARNING:COUNTY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:COUNTY not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "COUNTY not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -300,7 +289,7 @@ if(any(is.na(herbdat_comments$LOCALITY))){
     herbdat_comments$LOCALITY[which(is.na(herbdat_comments$LOCALITY))] <- "WARNING:LOCALITY not provided"
     position <- which(herbdat_comments == "WARNING:LOCALITY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:LOCALITY not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "LOCALITY not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -309,7 +298,7 @@ if(any(is.na(herbdat_comments$IDENTIFIED_BY))){
     herbdat_comments$IDENTIFIED_BY[which(is.na(herbdat_comments$IDENTIFIED_BY))] <- "WARNING:IDENTIFIED_BY not provided"
     position <- which(herbdat_comments == "WARNING:IDENTIFIED_BY not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:IDENTIFIED_BY not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "IDENTIFIED_BY not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
@@ -318,7 +307,7 @@ if(any(is.na(herbdat_comments$DATE_IDENTIFIED))){
     herbdat_comments$DATE_IDENTIFIED[which(is.na(herbdat_comments$DATE_IDENTIFIED))] <- "WARNING:DATE_IDENTIFIED not provided"
     position <- which(herbdat_comments == "WARNING:DATE_IDENTIFIED not provided" , arr.ind = TRUE )
     for(i in 1:nrow(position)){
-    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:DATE_IDENTIFIED not provided"))
+    writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "DATE_IDENTIFIED not provided"))
     addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
