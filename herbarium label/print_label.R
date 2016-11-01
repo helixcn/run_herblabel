@@ -14,6 +14,7 @@ setwd(res)
 
 #### setwd("/home/jinlong/Documents/github packages/run_herblabel/herbarium label")
 #### setwd("C:/github packages/run_herblabel/herbarium label")
+#### setwd("C:\\Jinlong\\packages\\run_herblabel\\herbarium label")
 invisible(library(openxlsx))
 invisible(Sys.setlocale("LC_TIME", "C"))
 library(herblabel)
@@ -172,11 +173,86 @@ if(any(is.na(herbdat000$DATE_IDENTIFIED))){
 }
 
 
-datesty <- createStyle(numFmt = "yyyy-mm-dd")
+####################### Check the vadility of geographical coordinates #######################
+col_no_LAT_DEGREE <- which(colnames(herbdat000) == "LAT_DEGREE")
+col_no_LAT_MINUTE <- which(colnames(herbdat000) == "LAT_MINUTE")
+col_no_LAT_SECOND <- which(colnames(herbdat000) == "LAT_SECOND")
+col_no_LAT_FLAG   <- which(colnames(herbdat000) == "LAT_FLAG")
+col_no_LON_DEGREE <- which(colnames(herbdat000) == "LON_DEGREE")
+col_no_LON_MINUTE <- which(colnames(herbdat000) == "LON_MINUTE")
+col_no_LON_SECOND <- which(colnames(herbdat000) == "LON_SECOND")
+col_no_LON_FLAG   <- which(colnames(herbdat000) == "LON_FLAG")
 
-addStyle(wb, 1, style = datesty, rows = 1:(nrow(herbdat000) - 1), cols = which(colnames(herbdat000) == "DATE_IDENTIFIED"), gridExpand = TRUE)   
-addStyle(wb, 1, style = datesty, rows = 1:(nrow(herbdat000) - 1), cols = which(colnames(herbdat000) == "DATE_COLLECTED"), gridExpand = TRUE)   
-options("openxlsx.dateFormat" = "yyyy-mm-dd")
+herbdat000$LAT_DEGREE  <- as.numeric(herbdat000$LAT_DEGREE)
+herbdat000$LAT_MINUTE  <- as.numeric(herbdat000$LAT_MINUTE)
+herbdat000$LAT_SECOND  <- as.numeric(herbdat000$LAT_SECOND)
+herbdat000$LON_DEGREE  <- as.numeric(herbdat000$LON_DEGREE)
+herbdat000$LON_MINUTE  <- as.numeric(herbdat000$LON_MINUTE)
+herbdat000$LON_SECOND  <- as.numeric(herbdat000$LON_SECOND)
+
+##################################################################
+for (i in 1:nrow(herbdat000)){
+    ##### herbdat000$LAT_DEGREE
+    ##### col_no_LAT_DEGREE
+    if(!is.na(herbdat000$LAT_DEGREE[i])){
+        if(herbdat000$LAT_DEGREE[i] < 0 | herbdat000$LAT_DEGREE[i] > 90){
+            writeComment(wb, 1, col = col_no_LAT_DEGREE, row = i + 1, comment = createComment(comment = "Degrees must be between 0 and 90"))
+            addStyle(wb, 1, bodyStyle, cols = col_no_LAT_DEGREE, rows = i + 1)
+        }
+    }
+    
+    ##### herbdat000$LAT_MINUTE col_no_LAT_MINUTE
+    if(!is.na(herbdat000$LAT_MINUTE[i])){
+        if(herbdat000$LAT_MINUTE[i] < 0 | herbdat000$LAT_MINUTE[i] > 60){
+            writeComment(wb, 1, col = col_no_LAT_MINUTE, row = i + 1, comment = createComment(comment = "Minutes must be between 0 and 90"))
+            addStyle(wb, 1, bodyStyle, cols = col_no_LAT_MINUTE, rows = i + 1)
+        }
+    }
+    ##### herbdat000$LAT_SECOND  col_no_LAT_SECOND
+    if(!is.na(herbdat000$LAT_SECOND[i])){
+        if(herbdat000$LAT_SECOND[i] < 0 | herbdat000$LAT_SECOND[i] > 60){
+            writeComment(wb, 1, col = col_no_LAT_SECOND, row = i + 1, comment = createComment(comment = "Seconds must be between 0 and 90"))
+            addStyle(wb, 1, bodyStyle, cols = col_no_LAT_SECOND, rows = i + 1)
+        }
+    }
+    ##### herbdat000$LAT_FLAG  col_no_LAT_FLAG 
+    if(!is.na(herbdat000$LAT_FLAG[i])){
+        if(!herbdat000$LAT_FLAG[i] %in% c("N", "S")){
+            writeComment(wb, 1, col = col_no_LAT_FLAG, row = i + 1, comment = createComment(comment = "Latitudinal Flag should be either N or S"))
+            addStyle(wb, 1, bodyStyle, cols = col_no_LAT_FLAG, rows = i + 1)
+        }
+    }
+    ##### herbdat000$LON_DEGREE col_no_LON_DEGREE 
+    if(!is.na(herbdat000$LON_DEGREE[i])){
+        if(herbdat000$LON_DEGREE[i] < 0 | herbdat000$LON_DEGREE[i] > 180){
+            writeComment(wb, 1, col = col_no_LON_DEGREE, row = i + 1, comment = createComment(comment = "Degrees must be between 0 and 90"))
+            addStyle(wb, 1, bodyStyle, cols = col_no_LON_DEGREE, rows = i + 1)
+        }
+    }
+    ##### herbdat000$LON_MINUTE  col_no_LON_MINUTE
+    if(!is.na(herbdat000$LON_MINUTE[i])){
+        if(herbdat000$LON_MINUTE[i] < 0 | herbdat000$LON_MINUTE[i] > 60){
+            writeComment(wb, 1, col = col_no_LON_MINUTE, row = i + 1, comment = createComment(comment = "Minutes must be between 0 and 90"))
+            addStyle(wb, 1, bodyStyle, cols = col_no_LON_MINUTE, rows = i + 1)
+        }
+    }
+    ##### herbdat000$LON_SECOND  col_no_LON_SECOND
+    if(!is.na(herbdat000$LON_SECOND[i])){
+        if(herbdat000$LON_SECOND[i] < 0 | herbdat000$LON_SECOND[i] > 60){
+            writeComment(wb, 1, col = col_no_LON_SECOND, row = i + 1, comment = createComment(comment = "Seconds must be between 0 and 90"))
+            addStyle(wb, 1, bodyStyle, cols = col_no_LON_SECOND, rows = i + 1)
+        }
+    }
+    ##### herbdat000$LON_FLAG col_no_LON_FLAG 
+    if(!is.na(herbdat000$LON_FLAG[i])){
+        if(!herbdat000$LON_FLAG[i] %in% c("E", "W")){
+            writeComment(wb, 1, col = col_no_LON_FLAG, row = i + 1, comment = createComment(comment = "Longitudinal Flag must be either E or W"))
+            addStyle(wb, 1, bodyStyle, cols = col_no_LON_FLAG, rows = i + 1)
+        }
+    }
+}
+
+##################################################################
 saveWorkbook(wb, "herbarium_specimens_label_data.xlsx", overwrite = TRUE)
 
 #######################################################
@@ -312,10 +388,124 @@ if(any(is.na(herbdat_comments$DATE_IDENTIFIED))){
     }
 }
 
-datesty <- createStyle(numFmt = "yyyy/mm/dd")
-addStyle(filled_temp, 1, style = datesty, rows = 1:(nrow(herbdat_comments) - 1), cols = which(colnames(herbdat_comments) == "DATE_IDENTIFIED"), gridExpand = TRUE)   
-addStyle(filled_temp, 1, style = datesty, rows = 1:(nrow(herbdat_comments) - 1), cols = which(colnames(herbdat_comments) == "DATE_COLLECTED"), gridExpand = TRUE)   
-options("openxlsx.dateFormat" = "yyyy-mm-dd")
+
+
+####################### Check the vadility of geographical coordinates #######################
+col_no_LAT_DEGREE <- which(colnames(herbdat_comments) == "LAT_DEGREE")
+col_no_LAT_MINUTE <- which(colnames(herbdat_comments) == "LAT_MINUTE")
+col_no_LAT_SECOND <- which(colnames(herbdat_comments) == "LAT_SECOND")
+col_no_LAT_FLAG   <- which(colnames(herbdat_comments) == "LAT_FLAG")
+col_no_LON_DEGREE <- which(colnames(herbdat_comments) == "LON_DEGREE")
+col_no_LON_MINUTE <- which(colnames(herbdat_comments) == "LON_MINUTE")
+col_no_LON_SECOND <- which(colnames(herbdat_comments) == "LON_SECOND")
+col_no_LON_FLAG   <- which(colnames(herbdat_comments) == "LON_FLAG")
+
+herbdat_comments$LAT_DEGREE  <- as.numeric(herbdat_comments$LAT_DEGREE)
+herbdat_comments$LAT_MINUTE  <- as.numeric(herbdat_comments$LAT_MINUTE)
+herbdat_comments$LAT_SECOND  <- as.numeric(herbdat_comments$LAT_SECOND)
+herbdat_comments$LON_DEGREE  <- as.numeric(herbdat_comments$LON_DEGREE)
+herbdat_comments$LON_MINUTE  <- as.numeric(herbdat_comments$LON_MINUTE)
+herbdat_comments$LON_SECOND  <- as.numeric(herbdat_comments$LON_SECOND)
+
+##################################################################
+for (i in 1:nrow(herbdat_comments)){
+    ##### herbdat_comments$LAT_DEGREE
+    ##### col_no_LAT_DEGREE
+    if(!is.na(herbdat_comments$LAT_DEGREE[i])){
+        if(herbdat_comments$LAT_DEGREE[i] < 0 | herbdat_comments$LAT_DEGREE[i] > 90){
+            writeComment(filled_temp, 1, col = col_no_LAT_DEGREE, row = i + 1, comment = createComment(comment = "Degrees must be between 0 and 90"))
+            addStyle(filled_temp, 1, bodyStyle, cols = col_no_LAT_DEGREE, rows = i + 1)
+        }
+    }
+    
+    ##### herbdat_comments$LAT_MINUTE col_no_LAT_MINUTE
+    if(!is.na(herbdat_comments$LAT_MINUTE[i])){
+        if(herbdat_comments$LAT_MINUTE[i] < 0 | herbdat_comments$LAT_MINUTE[i] > 60){
+            writeComment(filled_temp, 1, col = col_no_LAT_MINUTE, row = i + 1, comment = createComment(comment = "Minutes must be between 0 and 90"))
+            addStyle(filled_temp, 1, bodyStyle, cols = col_no_LAT_MINUTE, rows = i + 1)
+        }
+    }
+    ##### herbdat_comments$LAT_SECOND  col_no_LAT_SECOND
+    if(!is.na(herbdat_comments$LAT_SECOND[i])){
+        if(herbdat_comments$LAT_SECOND[i] < 0 | herbdat_comments$LAT_SECOND[i] > 60){
+            writeComment(filled_temp, 1, col = col_no_LAT_SECOND, row = i + 1, comment = createComment(comment = "Seconds must be between 0 and 90"))
+            addStyle(filled_temp, 1, bodyStyle, cols = col_no_LAT_SECOND, rows = i + 1)
+        }
+    }
+    ##### herbdat_comments$LAT_FLAG  col_no_LAT_FLAG 
+    if(!is.na(herbdat_comments$LAT_FLAG[i])){
+        if(!herbdat_comments$LAT_FLAG[i] %in% c("N", "S")){
+            writeComment(filled_temp, 1, col = col_no_LAT_FLAG, row = i + 1, comment = createComment(comment = "Latitudinal Flag should be either N or S"))
+            addStyle(filled_temp, 1, bodyStyle, cols = col_no_LAT_FLAG, rows = i + 1)
+        }
+    }
+    ##### herbdat_comments$LON_DEGREE col_no_LON_DEGREE 
+    if(!is.na(herbdat_comments$LON_DEGREE[i])){
+        if(herbdat_comments$LON_DEGREE[i] < 0 | herbdat_comments$LON_DEGREE[i] > 180){
+            writeComment(filled_temp, 1, col = col_no_LON_DEGREE, row = i + 1, comment = createComment(comment = "Degrees must be between 0 and 90"))
+            addStyle(filled_temp, 1, bodyStyle, cols = col_no_LON_DEGREE, rows = i + 1)
+        }
+    }
+    ##### herbdat_comments$LON_MINUTE  col_no_LON_MINUTE
+    if(!is.na(herbdat_comments$LON_MINUTE[i])){
+        if(herbdat_comments$LON_MINUTE[i] < 0 | herbdat_comments$LON_MINUTE[i] > 60){
+            writeComment(filled_temp, 1, col = col_no_LON_MINUTE, row = i + 1, comment = createComment(comment = "Minutes must be between 0 and 90"))
+            addStyle(filled_temp, 1, bodyStyle, cols = col_no_LON_MINUTE, rows = i + 1)
+        }
+    }
+    ##### herbdat_comments$LON_SECOND  col_no_LON_SECOND
+    if(!is.na(herbdat_comments$LON_SECOND[i])){
+        if(herbdat_comments$LON_SECOND[i] < 0 | herbdat_comments$LON_SECOND[i] > 60){
+            writeComment(filled_temp, 1, col = col_no_LON_SECOND, row = i + 1, comment = createComment(comment = "Seconds must be between 0 and 90"))
+            addStyle(filled_temp, 1, bodyStyle, cols = col_no_LON_SECOND, rows = i + 1)
+        }
+    }
+    ##### herbdat_comments$LON_FLAG col_no_LON_FLAG 
+    if(!is.na(herbdat_comments$LON_FLAG[i])){
+        if(!herbdat_comments$LON_FLAG[i] %in% c("E", "W")){
+            writeComment(filled_temp, 1, col = col_no_LON_FLAG, row = i + 1, comment = createComment(comment = "Longitudinal Flag must be either E or W"))
+            addStyle(filled_temp, 1, bodyStyle, cols = col_no_LON_FLAG, rows = i + 1)
+        }
+    }
+}
+
+col_no_DATE_COLLECTED <- which(colnames(herbdat_comments) == "DATE_COLLECTED")
+col_no_DATE_IDENTIFIED <- which(colnames(herbdat_comments) == "DATE_IDENTIFIED")
+
+for (i in 1:nrow(herbdat_comments)){
+#### DATE_COLLECTED
+    if(!is.na(suppressWarnings(as.integer(herbdat_comments$DATE_COLLECTED[i])))){
+        if(!grepl("^darwin", R.version$os)){
+            x <- as.Date(as.integer(herbdat_comments$DATE_COLLECTED[i]), origin="1899-12-30")
+        } else {
+            x <- as.Date(as.integer(herbdat_comments$DATE_COLLECTED[i]), origin = "1904-01-01")
+        } 
+    } else {
+            x <- herbdat_comments$DATE_COLLECTED[i]
+    }
+     
+    if(x < as.Date("2000-1-1")){
+        writeComment(filled_temp, 1, col = col_no_DATE_COLLECTED, row = i + 1, comment = createComment(comment = "Please check the date"))
+        addStyle(filled_temp, 1, bodyStyle, cols = col_no_DATE_COLLECTED, rows = i + 1)
+    }
+
+    #### DATE_IDENTIFIED
+    if(!is.na(suppressWarnings(as.integer(herbdat_comments$DATE_IDENTIFIED[i])))){
+        if(!grepl("^darwin", R.version$os)){
+            y <- as.Date(as.integer(herbdat_comments$DATE_IDENTIFIED[i]), origin="1899-12-30")
+        } else {
+            y <- as.Date(as.integer(herbdat_comments$DATE_IDENTIFIED[i]), origin = "1904-01-01")
+        }
+    } else {
+            y <- herbdat_comments$DATE_IDENTIFIED[i]
+    } 
+    
+    if(y < as.Date("2000-1-1")){
+        writeComment(filled_temp, 1, col = col_no_DATE_IDENTIFIED, row = i + 1, comment = createComment(comment = "Please check the date"))
+        addStyle(filled_temp, 1, bodyStyle, cols = col_no_DATE_IDENTIFIED, rows = i + 1)
+    }
+}
+
 saveWorkbook(filled_temp, "herbarium_specimens_label_data.xlsx", overwrite = TRUE)
 
 ###############################################################################################
