@@ -283,10 +283,12 @@ row_genera <- which(grepl("Empty Species",                                      
 
 if(length(row_genera) > 0){
     for(i in 1:length(row_genera)){
-        writeComment(filled_temp, 1, col = col_genera, row = row_genera[i] + 1, comment = createComment(comment = gsub("", "", herbdat_comments$GENUS[row_genera][i])))
+        writeComment(filled_temp, 1, col = col_genera, row = row_genera[i] + 1, comment = createComment(comment = gsub(gsub("[ a-zA-Z]", "", herbdat_comments$GENUS[row_genera][i]), "", herbdat_comments$GENUS[row_genera][i])))
         addStyle(filled_temp, 1, bodyStyle, cols = col_genera, rows = row_genera[i] + 1)
+        print(gsub(herbdat_comments$GENUS[row_genera][i], "", herbdat_comments$GENUS[row_genera][i]))
     }
 }
+
 
 col_famliy <- which(colnames(herbdat_comments) == "FAMILY")
 row_family <- which(grepl("Empty Family", herbdat_comments$FAMILY)|grepl("Family not accepted at The Plant List Website", herbdat_comments$FAMILY ))
