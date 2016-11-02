@@ -22,7 +22,6 @@ install.packages("curl")     ### Dependency of devtools
 library(devtools)
 install_github("helixcn/herblabel")
 ```
-
 ## 1. Creating Herbarium Labels
 
 (1). Open and Fill the "herbarium_specimens_label_data.xlsx" template. Put Scientific Name or Chinese Name at the column "LOCAL_NAME".
