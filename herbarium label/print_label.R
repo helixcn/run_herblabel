@@ -163,6 +163,8 @@ if(any(is.na(herbdat000$IDENTIFIED_BY))){
        addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
     }
 }
+
+
 if(any(is.na(herbdat000$DATE_IDENTIFIED))){
     ddd$DATE_IDENTIFIED[which(is.na(herbdat000$DATE_IDENTIFIED))] <- "WARNING:DATE_IDENTIFIED not provided"
     position <- which(ddd == "WARNING:DATE_IDENTIFIED not provided" , arr.ind = TRUE )
@@ -172,6 +174,14 @@ if(any(is.na(herbdat000$DATE_IDENTIFIED))){
     }
 }
 
+if( any(as.Date(herbdat000$DATE_IDENTIFIED) <  as.Date(herbdat000$DATE_COLLECTED))){
+    ddd$DATE_IDENTIFIED[which(as.Date(herbdat000$DATE_IDENTIFIED) < as.Date(herbdat000$DATE_COLLECTED))] <- "WARNING:DATE_IDENTIFIED is earlier than DATE_COLLECTED"
+    position <- which(ddd == "WARNING:DATE_IDENTIFIED is earlier than DATE_COLLECTED" , arr.ind = TRUE )
+    for(i in 1:nrow(position)){
+        writeComment(wb, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:DATE_IDENTIFIED is earlier than DATE_COLLECTED"))
+        addStyle(wb, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
+    }
+}
 
 ####################### Check the vadility of geographical coordinates #######################
 col_no_LAT_DEGREE <- which(colnames(herbdat000) == "LAT_DEGREE")
@@ -390,7 +400,14 @@ if(any(is.na(herbdat_comments$DATE_IDENTIFIED))){
     }
 }
 
-
+if( any(as.Date(herbdat_comments$DATE_IDENTIFIED) <  as.Date(herbdat_comments$DATE_COLLECTED))){
+    ddd$DATE_IDENTIFIED[which(as.Date(herbdat_comments$DATE_IDENTIFIED) < as.Date(herbdat_comments$DATE_COLLECTED))] <- "WARNING:DATE_IDENTIFIED is earlier than DATE_COLLECTED"
+    position <- which(herbdat_comments ==  "WARNING:DATE_IDENTIFIED is earlier than DATE_COLLECTED" , arr.ind = TRUE )
+    for(i in 1:nrow(position)){
+        writeComment(filled_temp, 1, col = position[i,2], row = position[i,1] + 1, comment = createComment(comment = "WARNING:DATE_IDENTIFIED is earlier than DATE_COLLECTED"))
+        addStyle(filled_temp, 1, bodyStyle, cols = position[i,2], rows = position[i,1] + 1)
+    }
+}
 
 ####################### Check the vadility of geographical coordinates #######################
 col_no_LAT_DEGREE <- which(colnames(herbdat_comments) == "LAT_DEGREE")
