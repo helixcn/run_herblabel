@@ -12,6 +12,7 @@ replace_space <- function(x){gsub("^[[:space:]]+|[[:space:]]+$", "", x)}
 res <- getScriptPath()
 setwd(res)
 
+#### setwd("/home/jinlong/Documents/github packages/run_herblabel/herbarium label_KFBG")
 #### setwd("/home/jinlong/Documents/github packages/run_herblabel/herbarium label")
 #### setwd("C:/github packages/run_herblabel/herbarium label")
 #### setwd("C:\\Jinlong\\packages\\run_herblabel\\herbarium label")
@@ -274,7 +275,7 @@ saveWorkbook(wb, "herbarium_specimens_label_data.xlsx", overwrite = TRUE)
 dwc_filled2 <- read.xlsx("herbarium_specimens_label_data.xlsx")
 ###### dat = dwc_filled2
 #### Create the labels for checking or printing
-xxx_filled <- herbarium_label(dat = dwc_filled2, theme = "PE",outfile = paste("herbarium_labels_to_print.rtf"))
+xxx_filled <- herbarium_label(dat = dwc_filled2, outfile = paste("herbarium_labels_to_print.rtf"), theme = "PE" )
 
 filled_temp <- createWorkbook()
 addWorksheet(filled_temp, "Sheet 1")
@@ -491,39 +492,39 @@ for (i in 1:nrow(herbdat_comments)){
 col_no_DATE_COLLECTED <- which(colnames(herbdat_comments) == "DATE_COLLECTED")
 col_no_DATE_IDENTIFIED <- which(colnames(herbdat_comments) == "DATE_IDENTIFIED")
 
-for (i in 1:nrow(herbdat_comments)){
-#### DATE_COLLECTED
-    if(!is.na(suppressWarnings(as.integer(herbdat_comments$DATE_COLLECTED[i])))){
-        if(!grepl("^darwin", R.version$os)){
-            x <- as.Date(as.integer(herbdat_comments$DATE_COLLECTED[i]), origin="1899-12-30")
-        } else {
-            x <- as.Date(as.integer(herbdat_comments$DATE_COLLECTED[i]), origin = "1904-01-01")
-        } 
-    } else {
-            x <- herbdat_comments$DATE_COLLECTED[i]
-    }
-     
-    if(x < as.Date("2000-1-1")){
-        writeComment(filled_temp, 1, col = col_no_DATE_COLLECTED, row = i + 1, comment = createComment(comment = "Please check the date"))
-        addStyle(filled_temp, 1, bodyStyle, cols = col_no_DATE_COLLECTED, rows = i + 1)
-    }
 
-    #### DATE_IDENTIFIED
-    if(!is.na(suppressWarnings(as.integer(herbdat_comments$DATE_IDENTIFIED[i])))){
-        if(!grepl("^darwin", R.version$os)){
-            y <- as.Date(as.integer(herbdat_comments$DATE_IDENTIFIED[i]), origin="1899-12-30")
-        } else {
-            y <- as.Date(as.integer(herbdat_comments$DATE_IDENTIFIED[i]), origin = "1904-01-01")
-        }
-    } else {
-            y <- herbdat_comments$DATE_IDENTIFIED[i]
-    } 
-    
-    if(y < as.Date("2000-1-1")){
-        writeComment(filled_temp, 1, col = col_no_DATE_IDENTIFIED, row = i + 1, comment = createComment(comment = "Please check the date"))
-        addStyle(filled_temp, 1, bodyStyle, cols = col_no_DATE_IDENTIFIED, rows = i + 1)
-    }
-}
+#### for (i in 1:nrow(herbdat_comments)){
+#### 
+#### #### DATE_COLLECTED
+#### 
+####     if(!grepl("^darwin", R.version$os)){
+####         x <- tryCatch(as.Date(as.integer(herbdat_comments$DATE_COLLECTED[i]), origin = "1899-12-30"), 
+####     error= function(e) {print("Warning: Date format incorrect, using original string"); herbdat_comments$DATE_COLLECTED[i]})
+####         } else {
+####         x <- tryCatch(as.Date(as.integer(herbdat_comments$DATE_COLLECTED[i]), origin = "1904-01-01"), 
+####     error= function(e) {print("Warning: Date format incorrect, using original string"); herbdat_comments$DATE_COLLECTED[i]})
+####         }
+#### 
+####     #### if(x < as.Date("2000-1-1")){
+####     ####     writeComment(filled_temp, 1, col = col_no_DATE_COLLECTED, row = i + 1, comment = createComment(comment = "Please check the date"))
+####     ####     addStyle(filled_temp, 1, bodyStyle, cols = col_no_DATE_COLLECTED, rows = i + 1)
+####     #### }
+#### 
+####     #### DATE_IDENTIFIED
+#### 
+####     if(!grepl("^darwin", R.version$os)){
+####         y <- tryCatch(as.Date(as.integer(herbdat_comments$DATE_IDENTIFIED[i]), origin="1899-12-30"), 
+####     error= function(e) {print("Warning: Date format incorrect, using original string"); herbdat_comments$DATE_IDENTIFIED[i]})
+####     } else {
+####         y <- tryCatch(as.Date(as.integer(herbdat_comments$DATE_IDENTIFIED[i]), origin = "1904-01-01"), 
+####     error= function(e) {print("Warning: Date format incorrect, using original string"); herbdat_comments$DATE_IDENTIFIED[i]})
+####     }
+#### 
+####     #### if(y < as.Date("2000-1-1")){
+####     ####     writeComment(filled_temp, 1, col = col_no_DATE_IDENTIFIED, row = i + 1, comment = createComment(comment = "Please check the date"))
+####     ####     addStyle(filled_temp, 1, bodyStyle, cols = col_no_DATE_IDENTIFIED, rows = i + 1)
+####     #### }
+#### }
 
 saveWorkbook(filled_temp, "herbarium_specimens_label_data.xlsx", overwrite = TRUE)
 
@@ -547,14 +548,12 @@ if(file.exists("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx")){
         stop("Column names of the new data does not match the existing database.")
     } 
     dat_dc_db_char <- paste(dat_dc_db$COLLECTOR, 
-          dat_dc_db$COLLECTOR_NUMBER, 
-          dat_dc_db$DATE_COLLECTED)
+          dat_dc_db$COLLECTOR_NUMBER)
           
     dwc_filled2_char <- paste(dwc_filled2$COLLECTOR, 
-          dwc_filled2$COLLECTOR_NUMBER, 
-          dwc_filled2$DATE_COLLECTED)
+          dwc_filled2$COLLECTOR_NUMBER)
           
-    dat_dc_db_GUI <- as.character(dat_dc_db$GLOBAL_UNIQUE_IDENTIFIER) 
+    dat_dc_db_GUI   <- as.character(dat_dc_db$GLOBAL_UNIQUE_IDENTIFIER) 
     dwc_filled2_GUI <- as.character(dwc_filled2$GLOBAL_UNIQUE_IDENTIFIER)
         
     #### Delete the finded entries, only keep the entries not found in the dwc_filled2 form.
@@ -563,5 +562,6 @@ if(file.exists("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx")){
     temp_dat_dc_db <- rbind(dat_dc_db_deleted, dwc_filled2) ## Add the entries not found in the existing database.
 }
 
-write.xlsx(temp_dat_dc_db, paste("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", sep = ""))
+### Remove the duplicate entries
+write.xlsx(unique(temp_dat_dc_db), paste("DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", sep = ""))
 invisible(file.copy(from = "DARWIN_CORE_DB_SAVE/darwin_core_database.xlsx", to = paste("DARWIN_CORE_DB_SAVE/", dat_tag, "_darwin_core_database_saved.xlsx", sep = "")))
